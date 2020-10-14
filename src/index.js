@@ -1,10 +1,10 @@
 const app = require("express")();
-const http = require("http").createServer(app);
+const server = require("http").createServer(app);
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const vehicleRouter = require('./controllers/vehicleRouter');
-const io = require("socket.io")(http);
+const io = require("socket.io")(server);
 const { mqttClient } = require('./clients/mqttClient')
 
 const VEHICLE_EVENT = "vehicle-event";
@@ -37,12 +37,13 @@ io.on('connection', (socket) => {
 // });
 mqttClient.on("message", function (topic, message) {
   // message is Buffer
-  //console.log(message.toString());
+//   console.log(message.toString());
+//   console.log(message.toString());
   const mes = JSON.parse(message.toString()).VP;
-  //console.log(mes.desi, mes.dl )
+  //console.log(topic, mes );
   io.emit(VEHICLE_EVENT, message.toString());
 });
 
-http.listen(3000, () => {
+server.listen(3000, () => {
   console.log("listening on *:3000");
 });
