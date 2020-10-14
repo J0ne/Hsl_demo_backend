@@ -9,12 +9,19 @@ vehicleRouter.get('/', async (request, response) => {
 vehicleRouter.post('/', async (request, response) => {
     const body = request.body;
     const vehicleType = body.type;
-    connectTo(vehicleType);
+    const result = connectTo(vehicleType);
     // 202 Accepted
-    response.status(202).json(true);
+    response.status(202).json(result);
 });
 
-const vehicleTypes = [ 'tram', 'train', 'bus'];
+const vehicleTypes = [
+  { type: "tram" },
+  { type: "train" },
+  { type: "bus" },
+  { type: "metro" },
+  { type: "ferry" },
+  { type: "ubus" }
+];
 
 module.exports = vehicleRouter;
 
