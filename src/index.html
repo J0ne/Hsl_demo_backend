@@ -79,7 +79,7 @@
                 tram.addTo(map);
             }else{
                 const tramToUpdate = trams.find(t => t.veh === msgObj.veh);
-                tramToUpdate.moveTo(dest, 1000);
+                tramToUpdate.moveTo(dest, 2000);
 
             }
             map.on('popupopen', e => map.panTo(e.popup._latlng, { animate: true, duration: 1}));
