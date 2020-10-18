@@ -1,7 +1,9 @@
 const mqtt = require("mqtt");
 const mqttClient = mqtt.connect("mqtt://mqtt.hsl.fi:1883/");
+const TOPIC_BASE = '/hfp/v2/journey/ongoing/vp/';
+const TOPIC_SUFFIX = "/+/+/+/+/+/+/+/+/#";
 
-let currentTopic = '/hfp/v2/journey/ongoing/vp/tram/+/+/+/+/+/+/+/+/#';
+let currentTopic = `${TOPIC_BASE}tram${TOPIC_SUFFIX}`;
 mqttClient.on("connect", function () {
   mqttClient.subscribe(currentTopic, function (
     err
@@ -19,19 +21,21 @@ const _unsubscribe = () => {
     }
 }
 const connectTo = (type) => {
+  if (!type) throw Error('Type is missing or invalid');
 
-    if(!type) return;
-    _unsubscribe();
+  _unsubscribe();
     
-    const newTopic = `/hfp/v2/journey/ongoing/vp/${type}/+/+/+/+/+/+/+/4/#`;
-    mqttClient.subscribe(newTopic, function (err) {
-      if (!err) {
-        console.log("Subscribed to ", newTopic);
-        currentTopic = newTopic;
-      }
-    });
-    console.log(mqttClient._resubscribeTopics)
-    return { topics: mqttClient._resubscribeTopics };
+  const newTopic = `${TOPIC_BASE}${type}${TOPIC_SUFFIX}`;
+  mqttClient.subscribe(newTopic, function (err) {
+    if (!err) {
+      console.log("Subscribed to ", newTopic);
+      currentTopic = newTopic;
+    } else{
+        throw Error('Subscribing failed, error ', err );
+    }
+  });
+  //console.log(mqttClient._resubscribeTopics);
+  return { topics: mqttClient._resubscribeTopics };
 }
 module.exports.mqttClient = mqttClient;
 module.exports.connectTo = connectTo;
