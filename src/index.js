@@ -26,22 +26,26 @@ io.on('connection', (socket) => {
    socket.broadcast.emit("hi");
 });
 
-// client.on("connect", function () {
-//   client.subscribe("/hfp/v2/journey/ongoing/vp/tram/+/+/+/#", function (
-//     err
-//   ) {
-//     if (!err) {
-//       //client.publish("presence", "Hello mqtt");
-//     }
-//   });
-// });
 mqttClient.on("message", function (topic, message) {
-  // message is Buffer
-//   console.log(message.toString());
-//   console.log(message.toString());
+  // Buffer-olio
   const mes = JSON.parse(message.toString()).VP;
-  //console.log(topic, mes );
-  io.emit(VEHICLE_EVENT, message.toString());
+    //console.log(mes)
+  const includesLocation = mes.lat && mes.long;
+  // tehdään konvertointeja ja täällä: frontendin kuorma kevenee
+  if(includesLocation){
+    const vehicleDTO = {
+      speed: Math.round(mes.spd * 3.6), // m/s -> km/h
+      location: { lat: mes.lat, lon: mes.long },
+      routeNumber: mes.desi,
+      veh: mes.veh, // dokumentaation mukaan "veh" joillakin operaattoireilla päällekkäisiä numeroita > 
+      dl: mes.dl,
+    };
+    console.log(vehicleDTO)
+    io.emit(VEHICLE_EVENT, vehicleDTO);
+  }
+  
+
+  
 });
 
 server.listen(3000, () => {
