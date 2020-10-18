@@ -9,6 +9,7 @@ vehicleRouter.get('/', async (request, response) => {
 vehicleRouter.post('/', async (request, response) => {
     const body = request.body;
     const vehicleType = body.type;
+    // todo selectVehicleObj
     const result = connectTo(vehicleType);
     // 202 Accepted
     response.status(202).json(result);
