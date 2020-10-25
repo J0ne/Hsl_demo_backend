@@ -6,11 +6,12 @@ const TOPIC_SUFFIX = "/+/+/+/+/+/+/+/+/#";
 let currentTopic = `${TOPIC_BASE}tram${TOPIC_SUFFIX}`;
 mqttClient.on("connect", function () {
   mqttClient.subscribe(currentTopic, function (
-    err
-  ) {
-    if (!err) {
-      mqttClient.publish("presence", "Hello mqtt");
-    }
+    err) {
+    console.log('connected', currentTopic);
+    console.log('error:', err);
+    // if (!err) {
+    //   mqttClient.publish("presence", "Hello mqtt");
+    // }
   });
 });
 
@@ -31,7 +32,7 @@ const connectTo = (type) => {
       console.log("Subscribed to ", newTopic);
       currentTopic = newTopic;
     } else{
-        throw Error('Subscribing failed, error ', err );
+        throw Error('Subscribing failed, error:', err );
     }
   });
   //console.log(mqttClient._resubscribeTopics);
