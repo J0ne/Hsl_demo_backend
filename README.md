@@ -1,8 +1,8 @@
 # hsl_backend
 
-Uses HSL message queue.
+Demo backend for demoing HSL open data. Uses message queue.
 
-Install node 
+Install node.
 
 Install packages
 ```sh
@@ -13,3 +13,7 @@ Start app
 ```sh
 node src/index.js
 ```
+
+When working properly, you should see message
+>listening on *:3000
+>connected /hfp/v2/journey/ongoing/vp/tram/+/+/+/+/+/+/+/+/#
