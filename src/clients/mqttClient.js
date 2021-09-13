@@ -8,7 +8,7 @@ mqttClient.on("connect", function () {
   mqttClient.subscribe(currentTopic, function (
     err) {
     console.log('connected', currentTopic);
-    console.log('error:', err);
+    //console.log('error:', err);
     // if (!err) {
     //   mqttClient.publish("presence", "Hello mqtt");
     // }

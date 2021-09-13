@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
 mqttClient.on("message", function (topic, message) {
   // Buffer-olio
   const mes = JSON.parse(message.toString()).VP;
-  console.log(mes)
+  //console.log(mes)
   const includesLocation = mes.lat && mes.long;
   // tehdään konvertointeja ja täällä: frontendin kuorma kevenee
   // mes.length < 3 <- tietomäärää pienemmäksi jätetään bussiliikennettä pois
