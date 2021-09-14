@@ -1,6 +1,6 @@
 # hsl_backend
 
-Demo backend for demoing HSL open data. Uses message queue.
+Demo backend for demoing HSL open data. App registers to HSL mqtt service bus and listens tram positions. It sends the data via socket connection. 
 
 Install node.
 
